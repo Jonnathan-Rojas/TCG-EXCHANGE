@@ -1,0 +1,1869 @@
+/* ===== SECCION TOKENS GLOBALES: INICIO =====
+ * Variables visuales reutilizadas por componentes de index.php.
+ */
+:root {
+	--font-family-base: "DM Sans", sans-serif;
+	--font-family-headings: "Rethink Sans", sans-serif;
+	--font-family-btn: "DM Sans", sans-serif;
+	--font-size-base: 16px;
+	--font-weight-base: 400;
+	--line-height-base: 26px;
+	--primary: #fd5523;
+	--white: #fff;
+	--body-color: #535353;
+	--dark: #020e28;
+	--headings-color: #020e28
+}
+/* ===== SECCION TOKENS GLOBALES: FIN ===== */
+
+/* ===== SECCION LAYOUT BASE: INICIO =====
+ * Normaliza caja, define tipografia y establece estructura flex para empujar footer.
+ */
+*,
+*::before,
+*::after {
+	box-sizing: border-box
+}
+
+html {
+	height: 100%
+}
+
+body {
+	font-family: var(--font-family-base);
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-base);
+	line-height: var(--line-height-base);
+	color: var(--body-color);
+	/* Usa alto de viewport para garantizar empuje del footer al fondo. */
+	min-height: 100vh;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale
+}
+
+.page-wrap {
+	flex: 1 0 auto;
+	display: flex;
+	flex-direction: column
+}
+
+.page-wrap > section {
+	flex: 1 0 auto
+}
+
+a,
+a:focus,
+a:hover {
+	color: var(--headings-color);
+	transition: color .25s ease, opacity .25s ease;
+	text-decoration: none
+}
+
+.bg-cover {
+	background-size: cover;
+	background-position: 50%;
+	background-repeat: no-repeat
+}
+/* ===== SECCION LAYOUT BASE: FIN ===== */
+
+/* ===== SECCION BOTONES RASTREO: INICIO =====
+ * Controla estados base, hover y efecto visual del boton primario.
+ */
+.btn {
+	font-family: var(--font-family-btn);
+	font-size: 15px;
+	font-weight: 600;
+	text-transform: capitalize;
+	padding: 10px 15px;
+	border-radius: 8px;
+	position: relative;
+	border: 0 !important;
+	overflow: hidden;
+	z-index: 1;
+	transition: .3s
+}
+
+.btn.btn-sm {
+	padding: 8px 15px;
+	font-size: 14px;
+	border-radius: 8px
+}
+
+.btn span {
+	position: absolute;
+	display: block;
+	width: 0;
+	height: 0;
+	border-radius: 8px;
+	background-color: var(--dark);
+	transition: width .5s ease-in-out, height .5s ease-in-out;
+	transform: translate(-50%, -50%);
+	z-index: -1
+}
+
+.btn i.fa-arrow-right {
+	transform: rotate(-30deg);
+	transition: transform .4s ease-in-out
+}
+
+.btn:hover i.fa-arrow-right {
+	transform: rotate(0deg)
+}
+
+.btn:hover span {
+	width: 225%;
+	height: 562.5px
+}
+
+.btn-primary {
+	background-color: var(--primary);
+	border-color: var(--primary);
+	color: var(--white)
+}
+
+.btn-primary:focus,
+.btn-primary:hover {
+	background-color: rgb(234.86, 55.51, 2.14);
+	border-color: rgb(234.86, 55.51, 2.14);
+	color: var(--white)
+}
+/* ===== SECCION BOTONES RASTREO: FIN ===== */
+
+/* ===== SECCION CABECERA: INICIO =====
+ * Define geometria inicial del header, variante overlay y estilo del navbar.
+ */
+.header {
+	position: relative;
+	z-index: 9
+}
+
+.header .header-wrapper {
+	position: relative;
+	width: 100%;
+	left: 0;
+	right: 0
+}
+
+.header.header-default {
+	position: relative;
+	z-index: 9;
+	width: 100%
+}
+
+.header.header-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0
+}
+
+.header.header-overlay .header-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0
+}
+
+@media (min-width: 1200px) {
+	.header.header-default .navbar .container {
+		max-width: 1320px
+	}
+}
+
+@media (min-width: 1400px) {
+	.header.header-default .navbar .container {
+		max-width: 1365px
+	}
+}
+
+.header.header-default .navbar .container {
+	background: url("../../images/header-bg.png") no-repeat 50%/contain;
+	padding: 15px 20px 25px;
+	border-radius: 100px
+}
+
+@media (max-width: 1199.98px) {
+	.header.header-default .navbar .container {
+		padding: 10px 20px;
+		background-color: var(--white)
+	}
+}
+
+@media (min-width: 1600px) {
+	.header.header-default .navbar .container {
+		max-width: 1505px
+	}
+}
+
+.header.header-default .header-nav-wrapper.header-sticky.scroll-on .container {
+	padding: 0
+}
+
+/* --- MENU STICKY POR SCROLL: INICIO ---
+ * Este segmento define la reserva de altura y el estilo compacto
+ * que se aplica unicamente cuando JavaScript agrega la clase scroll-on.
+ */
+.sticky-height {
+	height: 0;
+	overflow: hidden;
+	transition: height .25s ease
+}
+
+.navbar {
+	padding: 20px 0
+}
+
+@media (max-width: 1199.98px) {
+	.navbar {
+		padding: 10px 0
+	}
+}
+
+.navbar .navbar-brand {
+	margin-right: 0
+}
+
+@media (max-width: 991.98px) {
+	.header .navbar-brand img {
+		max-width: 180px
+	}
+}
+
+@media (max-width: 767.98px) {
+	.header .navbar-brand img {
+		max-width: 155px
+	}
+}
+
+.navbar .navbar-toggler:focus {
+	box-shadow: none
+}
+
+.navbar button.navbar-toggler.offcanvas-nav-btn {
+	border: 0;
+	font-size: 18px;
+	color: var(--headings-color);
+	text-transform: uppercase;
+	padding: 0;
+	font-weight: 700
+}
+
+.navbar button.navbar-toggler.offcanvas-nav-btn .fa,
+.navbar button.navbar-toggler.offcanvas-nav-btn svg {
+	vertical-align: baseline
+}
+
+.navbar .navbar-nav > li a.nav-link {
+	padding: 32px 20px;
+	text-transform: capitalize;
+	font-weight: 500;
+	font-size: 1rem;
+	font-family: var(--font-family-headings)
+}
+
+.navbar .navbar-nav > li:first-child a.nav-link {
+	padding-left: 0
+}
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+	.navbar .navbar-nav > li a.nav-link {
+		padding: 32px 18px
+	}
+}
+
+@media (max-width: 1199.98px) {
+	.navbar .navbar-nav > li {
+		width: 100%
+	}
+}
+
+header .header-nav-wrapper.header-sticky.scroll-on {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	z-index: 99;
+	background: var(--white);
+	box-shadow: 0 .25rem 1.25rem rgba(0, 0, 0, .07);
+	width: 100%;
+	animation: headerSlideDown 1.3s ease forwards
+}
+
+/* Reduce altura del navbar cuando el estado sticky ya esta activo. */
+header .header-nav-wrapper.header-sticky.scroll-on .navbar {
+	padding: 3px 0
+}
+
+@media (max-width: 1199.98px) {
+	header .header-nav-wrapper.header-sticky.scroll-on .navbar {
+		padding: 5px 10px
+	}
+}
+
+header .header-nav-wrapper.header-sticky.scroll-on .navbar .navbar-nav > li a.nav-link {
+	padding: 28px 18px
+}
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+	header .header-nav-wrapper.header-sticky.scroll-on .navbar .navbar-nav > li a.nav-link {
+		padding: 21px 18px
+	}
+}
+
+@media (max-width: 1199.98px) {
+	header .header-nav-wrapper.header-sticky.scroll-on .navbar .navbar-nav > li a.nav-link {
+		padding: 16px 0
+	}
+}
+/* --- MENU STICKY POR SCROLL: FIN --- */
+
+@media (min-width: 1200px) {
+	header .header-nav-wrapper .navbar .navbar-nav li:hover a.nav-link {
+		color: var(--primary)
+	}
+}
+
+@keyframes headerSlideDown {
+	0% {
+		margin-top: -6.25rem
+	}
+	to {
+		margin-top: 0
+	}
+}
+
+@media (max-width: 1199.98px) {
+	.navbar .offcanvas-header {
+		margin-bottom: 15px
+	}
+
+	.navbar .offcanvas-header img {
+		max-width: 150px
+	}
+
+	.navbar .navbar-nav .nav-item .nav-link {
+		border-radius: 0;
+		padding: 16px 0;
+		font-size: 16px;
+		line-height: 1
+	}
+
+	.navbar .navbar-nav .nav-item:last-child .nav-link {
+		border: 0
+	}
+}
+
+.offcanvas-header .btn-close {
+	padding: 4px
+}
+/* ===== SECCION CABECERA: FIN ===== */
+
+/* ===== SECCION RASTREO PORTADA: INICIO =====
+ * Configura bloque visual del formulario, fondo y adaptacion responsive.
+ */
+section.rastreo-sec {
+	padding: 250px 0 100px;
+	background-color: #d9d9d9;
+	background-blend-mode: multiply
+}
+
+section.rastreo-sec.rastreo-tracking {
+	padding: 40px 0 60px
+}
+
+section.rastreo-sec.rastreo-tracking .tracking-form2 {
+	margin-top: 100px;
+	padding: 28px
+}
+
+section.rastreo-sec.rastreo-tracking .tracking-form2 .form-inner {
+	padding: 28px 40px
+}
+
+@media (max-width: 767.98px) {
+	section.rastreo-sec.rastreo-tracking {
+		padding: 24px 0 40px
+	}
+	section.rastreo-sec.rastreo-tracking .tracking-form2,
+	section.rastreo-sec.rastreo-tracking .tracking-form2 .form-inner {
+		padding: 20px
+	}
+}
+
+@media (max-width: 767.98px) {
+	section.rastreo-sec {
+		padding: 150px 0 80px
+	}
+}
+
+section.rastreo-sec.rastreo-tracking.tracking-page.tcgx-rastreo-bg {
+	position: relative;
+	background-image: url("../../images/formbg.png");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat
+}
+
+section.rastreo-sec.rastreo-tracking.tracking-page.tcgx-rastreo-bg .tracking-form2 {
+	margin-top: 140px;
+	padding: clamp(1.25rem, 3vw, 2.25rem) clamp(1.35rem, 3.5vw, 2.5rem);
+	background-image: none;
+	background-color: rgba(2, 14, 40, .55);
+	-webkit-backdrop-filter: blur(14px);
+	backdrop-filter: blur(14px);
+	border: 1px solid rgba(255, 255, 255, .1);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, .2);
+	outline: none;
+	border-radius: 24px;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	overflow: hidden
+}
+
+section.rastreo-sec.rastreo-tracking.tracking-page.tcgx-rastreo-bg .tracking-form2 .form-inner {
+	box-shadow: none;
+	border: none;
+	outline: none;
+	background: transparent;
+	border-radius: 0;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	box-sizing: border-box
+}
+
+.tracking-page .tracking-form2 .form-inner label {
+	display: block;
+	color: var(--white);
+	margin-bottom: 10px;
+	font-family: var(--font-family-headings);
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 1.2
+}
+
+section.rastreo-sec.rastreo-tracking.tracking-page.tcgx-rastreo-bg .tracking-form2 .form-inner input[type="text"] {
+	display: block;
+	width: 100%;
+	padding: 14px 18px;
+	font-size: 16px;
+	font-family: var(--font-family-base);
+	color: var(--headings-color);
+	background: var(--white);
+	border: none;
+	border-radius: 10px;
+	outline: none
+}
+
+section.rastreo-sec.rastreo-tracking.tracking-page.tcgx-rastreo-bg .tracking-form2 .form-inner .btn,
+section.rastreo-sec.rastreo-tracking.tracking-page.tcgx-rastreo-bg .tracking-form2 .form-inner input[type="text"] {
+	border-radius: 10px
+}
+
+section.rastreo-sec.rastreo-tracking.tracking-page.tcgx-rastreo-bg .tracking-form2 .form-inner .btn span {
+	border-radius: 10px
+}
+
+@media (max-width: 767.98px) {
+	section.rastreo-sec.rastreo-tracking.tracking-page.tcgx-rastreo-bg .tracking-form2 {
+		margin-top: 140px;
+		padding: 1.1rem 1.2rem;
+		border-radius: 18px
+	}
+	section.rastreo-sec.rastreo-tracking.tracking-page.tcgx-rastreo-bg .tracking-form2 .form-inner {
+		padding: 0;
+		border-radius: 0
+	}
+}
+/* ===== SECCION RASTREO PORTADA: FIN ===== */
+
+/* ===== SECCION CONTENEDOR CENTRAL: INICIO =====
+ * Reserva un bloque centrado bajo rastreo para contenido funcional posterior.
+ * El marcado HTML del contenedor vive en cada pagina que lo usa; el aspecto del header/footer es el mismo en todas.
+ */
+
+section.contenedor-central-sec {
+	/* Segunda reduccion al 50%: mitad del padding vertical aplicado en el paso anterior. */
+	padding: 11px 0 13px;
+	background-color: #f6f7fb
+}
+
+section.contenedor-central-sec .container {
+	/* Elimina limite de max-width para que el ancho porcentual del box sea visualmente real. */
+	max-width: 100%;
+	padding-left: 0;
+	padding-right: 0
+}
+
+section.contenedor-central-sec .row {
+	/* Segunda reduccion al 50% del gutter ya recortado en este bloque. */
+	--bs-gutter-x: 0.375rem;
+	/*
+	 * Sin padding horizontal en el container, el margen negativo por defecto de .row
+	 * de Bootstrap ensancha el layout mas del 100% y provoca scroll horizontal.
+	 */
+	margin-left: 0;
+	margin-right: 0
+}
+
+.contenedor-central-box {
+	/* Altura minima base del box central; se retiro la prueba temporal de 600px por orden del programador. */
+	min-height: 220px;
+	/* Segunda reduccion al 50% del margen lateral restante respecto al 99%. */
+	width: 99.5%;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid rgba(2, 14, 40, .08);
+	border-radius: 16px;
+	background-color: #ffffff;
+	box-shadow: 0 8px 24px rgba(2, 14, 40, .08)
+}
+
+@media (max-width: 767.98px) {
+	section.contenedor-central-sec {
+		/* Segunda reduccion al 50% del padding vertical movil del paso anterior. */
+		padding: 7px 0 9px
+	}
+
+	.contenedor-central-box {
+		/* Altura minima movil del box central; restaurada tras retirar prueba temporal de 600px. */
+		min-height: 180px;
+		border-radius: 12px
+	}
+}
+
+/* ===== SECCION CONTENEDOR CENTRAL: FIN ===== */
+
+/* ===== SECCION LOGIN PAGINA: INICIO =====
+ * Maquetacion compacta de login.php: mismo patron de caja que politica/terminos (page-content dentro de contenedor-central-box).
+ * Sin panel lateral; ancho limitado por grid Bootstrap. Sin copy de ayuda bajo el titulo (regla proyecto-core.mdc).
+ */
+
+/* --- LOGIN TARJETA (contenedor .tcgx-login-inline): INICIO ---
+ * El contenedor central ya es una caja blanca; este bloque da relieve al bloque titulo+formulario con borde, radio y sombra en capas
+ * (difusa + cercana) para separarlo visualmente del fondo page-content sin competir con la sombra del contenedor-central-box.
+ * max-width en rem: limita el ANCHO visible del formulario (credenciales cortas); no afecta la altura interna de los inputs.
+ * --- LOGIN TARJETA (contenedor .tcgx-login-inline): FIN --- */
+
+.tcgx-login-inline {
+	box-sizing: border-box;
+	max-width: min(100%, 22rem);
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1.1rem 1.25rem 1.35rem;
+	background-color: #fafbfd;
+	border: 1px solid rgba(2, 14, 40, .1);
+	border-radius: 14px;
+	box-shadow:
+		0 1px 2px rgba(2, 14, 40, .05),
+		0 8px 22px rgba(2, 14, 40, .08)
+}
+
+@media (max-width: 575.98px) {
+	.tcgx-login-inline {
+		padding: 1.1rem 1.125rem 1.35rem;
+		border-radius: 12px
+	}
+}
+
+/* --- LOGIN CABECERA (.tcgx-login-inline__head): retirada ---
+ * El titulo visible dentro de la tarjeta se elimino del maquetado (login.php); el titulo del documento sigue en $tcgxPageTitle.
+ * --- LOGIN CABECERA: FIN --- */
+
+/* --- LOGIN LABEL PROXIMIDAD AL CONTROL: INICIO ---
+ * Bootstrap .form-label usa margin-bottom 0.5rem; aqui se reduce para acercar texto al input en los dos campos del login.
+ * --- LOGIN LABEL PROXIMIDAD AL CONTROL: FIN --- */
+
+.tcgx-login-inline__label {
+	font-family: var(--font-family-headings);
+	font-weight: 600;
+	font-size: 0.875rem;
+	color: var(--headings-color);
+	margin-bottom: 0.125rem
+}
+
+/* --- LOGIN FORM CONTROLES (densidad): INICIO ---
+ * El bloque global .btn (seccion botones rastreo) aplica padding 16px 32px y radio 30px para la portada; las reglas .tcgx-login-inline__form .btn
+ * anulan solo el envio de login. La restriccion de anchura es la tarjeta (.tcgx-login-inline max-width), no la compresion vertical del control.
+ * --- LOGIN FORM CONTROLES (densidad): FIN --- */
+
+.tcgx-login-inline__control {
+	border: 1px solid rgba(2, 14, 40, .14);
+	border-radius: 8px;
+	padding: 0.375rem 0.75rem;
+	font-size: 0.9375rem;
+	line-height: 1.45;
+	min-height: calc(1.45em + 0.75rem + 2px);
+	transition: border-color .2s ease, box-shadow .2s ease
+}
+
+.tcgx-login-inline__control:focus {
+	border-color: rgba(253, 85, 35, .5);
+	box-shadow: 0 0 0 2px rgba(253, 85, 35, .16)
+}
+
+/* --- LOGIN FORM LAYOUT FLEX: INICIO ---
+ * Contenedor en columna: los inputs al 100% del ancho de la tarjeta; el boton align-self flex-end para situarlo a la derecha sin w-100.
+ * --- LOGIN FORM LAYOUT FLEX: FIN --- */
+
+.tcgx-login-inline__form {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch
+}
+
+/* Boton de envio alineado al borde derecho de la tarjeta de login (accion Iniciar Sesión). */
+.tcgx-login-inline__form .btn {
+	padding: 0.5rem 1.125rem;
+	font-size: 0.9375rem;
+	border-radius: 10px;
+	width: auto;
+	align-self: flex-end
+}
+
+.tcgx-login-inline__form .btn span {
+	border-radius: 10px
+}
+
+/* --- LOGIN ENLACE OLVIDO CLAVE: INICIO ---
+ * Estilos del enlace secundario; la opcion checkbox Recordar sesion se retiro del maquetado (login.php) por orden del programador.
+ * --- LOGIN ENLACE OLVIDO CLAVE: FIN --- */
+
+.tcgx-login-inline__link {
+	font-size: .875rem;
+	font-weight: 600;
+	color: var(--primary)
+}
+
+.tcgx-login-inline__link:hover {
+	color: #e84e1f
+}
+/* ===== SECCION LOGIN PAGINA: FIN ===== */
+
+/* ===== SECCION FOOTER: INICIO =====
+ * Estilos de contacto, enlaces, redes y barra legal con ajustes por breakpoint.
+ */
+.site-footer {
+	/* Empuja el pie al fondo cuando el contenido principal es corto. */
+	margin-top: auto;
+	flex-shrink: 0;
+	background-color: #141414;
+	color: var(--white)
+}
+
+.site-footer__main {
+	padding: 1.625rem 0 1.375rem
+}
+
+.site-footer__logo img {
+	max-height: 58px;
+	width: auto
+}
+
+.site-footer__contact li {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 12px;
+	margin-bottom: 1rem;
+	font-size: 15px;
+	line-height: 1.45;
+	color: rgba(255, 255, 255, .92)
+}
+
+.site-footer__contact li:last-child {
+	margin-bottom: 0
+}
+
+.site-footer__contact-icon {
+	flex: 0 0 36px;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background-color: var(--primary);
+	color: var(--white);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px
+}
+
+.site-footer__contact a {
+	color: inherit;
+	text-decoration: none;
+	transition: color .2s ease
+}
+
+.site-footer__contact a:link,
+.site-footer__contact a:visited {
+	color: rgba(255, 255, 255, .92)
+}
+
+.site-footer__contact a:hover {
+	color: var(--primary)
+}
+
+.site-footer__title {
+	font-family: var(--font-family-headings);
+	font-size: 1.05rem;
+	font-weight: 700;
+	color: var(--white);
+	margin: 0 0 1.25rem;
+	letter-spacing: .02em
+}
+
+.site-footer__list li {
+	margin-bottom: .65rem
+}
+
+.site-footer__list li:last-child {
+	margin-bottom: 0
+}
+
+.site-footer__list a {
+	display: inline-flex;
+	align-items: center;
+	gap: .5rem;
+	color: rgba(255, 255, 255, .88);
+	font-size: 15px;
+	text-decoration: none;
+	transition: color .2s ease, padding-left .2s ease
+}
+
+.site-footer__list a i {
+	font-size: .7rem;
+	opacity: .85;
+	margin-top: 2px
+}
+
+.site-footer__list a:link,
+.site-footer__list a:visited {
+	color: rgba(255, 255, 255, .88)
+}
+
+.site-footer__list a:hover {
+	color: var(--primary);
+	padding-left: 4px
+}
+
+.site-footer__credit {
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.45;
+	color: rgba(255, 255, 255, .65)
+}
+
+.site-footer__credit a:link,
+.site-footer__credit a:visited {
+	color: rgba(255, 255, 255, .88);
+	text-decoration: none
+}
+
+.site-footer__credit a:hover,
+.site-footer__credit a:focus {
+	color: var(--primary);
+	text-decoration: none
+}
+
+.site-footer__socials {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	gap: 12px
+}
+
+.site-footer__social {
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	border: 1px solid rgba(255, 255, 255, .45);
+	color: var(--white);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	font-size: 16px;
+	transition: border-color .2s ease, background-color .2s ease, color .2s ease
+}
+
+.site-footer__social:hover {
+	border-color: var(--primary);
+	background-color: var(--primary);
+	color: var(--white)
+}
+
+.site-footer__social:link,
+.site-footer__social:visited {
+	color: var(--white)
+}
+
+.site-footer__social:hover,
+.site-footer__social:focus,
+.site-footer__social:focus-visible {
+	color: var(--white)
+}
+
+.site-footer__nav a:link,
+.site-footer__nav a:visited,
+.site-footer__nav a:hover,
+.site-footer__nav a:focus {
+	color: var(--white)
+}
+
+.site-footer__copy a:link,
+.site-footer__copy a:visited {
+	color: var(--primary)
+}
+
+.site-footer__copy a:hover,
+.site-footer__copy a:focus {
+	color: var(--primary);
+	text-decoration: none
+}
+
+.site-footer__bar {
+	border-top: 1px solid rgba(255, 255, 255, .18);
+	padding: 0.575rem 0 0.675rem
+}
+
+.site-footer__bar-inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px 20px
+}
+
+.site-footer__copy {
+	margin: 0;
+	color: rgba(255, 255, 255, .88);
+	font-size: 14px;
+	line-height: 1.4
+}
+
+.site-footer__copy a {
+	color: var(--primary);
+	font-weight: 600;
+	text-decoration: none
+}
+
+.site-footer__copy a:hover {
+	text-decoration: none
+}
+
+.site-footer__nav {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 12px
+}
+
+.site-footer__nav a {
+	color: var(--white);
+	font-size: 14px;
+	text-decoration: none
+}
+
+.site-footer__nav a:hover {
+	color: var(--primary)
+}
+
+.site-footer__sep {
+	color: rgba(255, 255, 255, .45);
+	font-size: 14px;
+	-webkit-user-select: none;
+	user-select: none
+}
+
+@media (max-width: 991.98px) {
+	.site-footer__main {
+		padding: 1.25rem 0 1rem
+	}
+}
+
+@media (max-width: 575.98px) {
+	.site-footer__bar-inner {
+		flex-direction: column;
+		text-align: center;
+		justify-content: center
+	}
+	.site-footer__copy,
+	.site-footer__nav a {
+		font-size: 13px
+	}
+}
+/* ===== SECCION FOOTER: FIN ===== */
+
+/* ===== SECCION BOTON IR ARRIBA: INICIO =====
+ * Boton flotante sobre el viewport; z-index por encima de la banda de cookies (120) para seguir siendo accesible.
+ * Estado visible se activa solo con clase desde JS para no capturar foco ni clics cuando esta oculto.
+ */
+
+.scroll-to-top {
+	position: fixed;
+	right: 1.25rem;
+	bottom: 1.25rem;
+	z-index: 125;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background-color: var(--primary);
+	color: var(--white);
+	font-size: 1.1rem;
+	cursor: pointer;
+	box-shadow: 0 6px 20px rgba(2, 14, 40, .22);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(12px);
+	pointer-events: none;
+	transition: opacity .25s ease, visibility .25s ease, transform .25s ease, background-color .2s ease, box-shadow .2s ease
+}
+
+.scroll-to-top:focus-visible {
+	outline: 3px solid rgba(253, 85, 35, .45);
+	outline-offset: 2px
+}
+
+.scroll-to-top:hover,
+.scroll-to-top:focus-visible {
+	background-color: #e84e1f;
+	box-shadow: 0 8px 24px rgba(2, 14, 40, .28)
+}
+
+.scroll-to-top.scroll-to-top--visible {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+	pointer-events: auto
+}
+
+@media (max-width: 575.98px) {
+	/* Desplaza ligeramente el boton para reducir solapamiento con la barra de cookies en pantallas bajas. */
+	.scroll-to-top {
+		right: 1rem;
+		bottom: 5.5rem;
+		width: 46px;
+		height: 46px
+	}
+}
+/* ===== SECCION BOTON IR ARRIBA: FIN ===== */
+
+/* ===== SECCION AVISO DE COOKIES: INICIO =====
+ * Controla banda fija inferior, estilos de acciones y estado oculto por consentimiento.
+ */
+
+.cookie-banner {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 120;
+	background: #1f2430;
+	border-top: 1px solid rgba(255, 255, 255, .18);
+	box-shadow: 0 -10px 30px rgba(0, 0, 0, .25);
+	transition: transform .25s ease, opacity .25s ease
+}
+
+.cookie-banner.is-hidden {
+	opacity: 0;
+	transform: translateY(102%);
+	pointer-events: none
+}
+
+.cookie-banner__inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 18px;
+	padding: 16px 0
+}
+
+.cookie-banner__title {
+	margin: 0 0 6px;
+	font-family: var(--font-family-headings);
+	font-size: 19px;
+	line-height: 1.15;
+	color: var(--white)
+}
+
+.cookie-banner__text {
+	margin: 0;
+	color: rgba(255, 255, 255, .9);
+	font-size: 14px;
+	line-height: 1.45
+}
+
+.cookie-banner__text a {
+	color: #ffd166;
+	text-decoration: underline
+}
+
+.cookie-banner__copy {
+	flex: 1 1 auto;
+	min-width: 0
+}
+
+.cookie-banner__actions {
+	display: inline-flex;
+	/* Mantiene ambos botones en una sola fila cuando hay ancho disponible. */
+	flex-wrap: nowrap;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px
+}
+
+.cookie-banner__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 42px;
+	padding: 0 16px;
+	border-radius: 9px;
+	border: 1px solid transparent;
+	font-family: var(--font-family-base);
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: all .2s ease;
+	cursor: pointer
+}
+
+.cookie-banner__btn--secondary {
+	background: #e8ebf0;
+	color: #20242e
+}
+
+.cookie-banner__btn--primary {
+	background: var(--primary);
+	color: var(--white)
+}
+
+.cookie-banner__btn--secondary:hover {
+	background: #ffffff;
+	color: #181c24
+}
+
+.cookie-banner__btn--primary:hover {
+	background: #d9481b;
+	color: var(--white)
+}
+
+@media (max-width: 991.98px) {
+	.cookie-banner__inner {
+		flex-direction: column;
+		align-items: flex-start
+	}
+
+	.cookie-banner__actions {
+		align-self: flex-end;
+		width: auto;
+		justify-content: flex-end
+	}
+}
+
+@media (max-width: 575.98px) {
+	/* Reduce densidad visual en móvil y evita apariencia pegada a bordes. */
+	.cookie-banner {
+		padding: 0 8px
+	}
+
+	.cookie-banner__inner {
+		padding: 12px 0;
+		gap: 12px
+	}
+
+	.cookie-banner__title {
+		font-size: 17px;
+		margin-bottom: 4px
+	}
+
+	.cookie-banner__text {
+		font-size: 12.5px;
+		line-height: 1.35
+	}
+
+	.cookie-banner__actions {
+		align-self: flex-end;
+		width: auto;
+		flex-wrap: nowrap;
+		justify-content: flex-end;
+		gap: 8px
+	}
+
+	.cookie-banner__btn {
+		flex: 0 1 auto;
+		min-width: 132px;
+		min-height: 36px;
+		padding: 0 12px;
+		font-size: 13px;
+		border-radius: 7px
+	}
+}
+
+/* ===== SECCION AVISO DE COOKIES: FIN ===== */
+
+/* ===== SECCION CATALOGO PUBLICO BUSCAR CARTAS: INICIO =====
+ * Pagina buscar-cartas.php: menu sticky sin rastreo, filtros en rejilla y 6 cartas por fila en escritorio.
+ */
+
+/* Cabecera oscura compacta: fondo negro, logo claro y enlaces blancos (buscar-cartas.php). */
+body.tcgx-pagina-buscar-cartas .header.header-default,
+body.tcgx-pagina-buscar-cartas .header .header-wrapper,
+body.tcgx-pagina-buscar-cartas .header-nav-wrapper.header-sticky,
+body.tcgx-pagina-buscar-cartas header .header-nav-wrapper.header-sticky.scroll-on {
+	position: relative;
+	background: var(--dark);
+	box-shadow: none
+}
+
+body.tcgx-pagina-buscar-cartas header .header-nav-wrapper.header-sticky.scroll-on {
+	box-shadow: 0 2px 14px rgba(0, 0, 0, .28)
+}
+
+body.tcgx-pagina-buscar-cartas .header .header-wrapper {
+	top: auto;
+	left: auto
+}
+
+body.tcgx-pagina-buscar-cartas .navbar {
+	padding: 0
+}
+
+body.tcgx-pagina-buscar-cartas .header.header-default .navbar .container {
+	padding: 6px 24px 8px;
+	background: transparent;
+	background-image: none;
+	background-color: transparent;
+	border-radius: 0;
+	max-width: 100%
+}
+
+body.tcgx-pagina-buscar-cartas .header .navbar-brand img {
+	max-height: 52px;
+	width: auto
+}
+
+body.tcgx-pagina-buscar-cartas .navbar .navbar-nav > li a.nav-link,
+body.tcgx-pagina-buscar-cartas header .header-nav-wrapper.header-sticky.scroll-on .navbar .navbar-nav > li a.nav-link {
+	padding: 8px 12px;
+	color: var(--white)
+}
+
+body.tcgx-pagina-buscar-cartas .navbar .navbar-nav > li a.nav-link i {
+	color: inherit
+}
+
+body.tcgx-pagina-buscar-cartas .navbar .navbar-nav > li a.nav-link:hover,
+body.tcgx-pagina-buscar-cartas .navbar .navbar-nav > li a.nav-link:focus {
+	color: var(--primary)
+}
+
+body.tcgx-pagina-buscar-cartas .navbar button.navbar-toggler.offcanvas-nav-btn {
+	color: var(--white)
+}
+
+body.tcgx-pagina-buscar-cartas .sticky-height {
+	display: none
+}
+
+body.tcgx-pagina-buscar-cartas section.tcgx-buscar-cartas-sec {
+	padding-top: 0.5rem
+}
+
+body.tcgx-pagina-buscar-cartas section.tcgx-buscar-cartas-sec .contenedor-central-box {
+	border-radius: 12px;
+	min-height: 0
+}
+
+.tcgx-catalogo-publico-filtro {
+	padding: 0.35rem 0.15rem 0.5rem;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid rgba(2, 14, 40, 0.1);
+	border-radius: 0
+}
+
+/* Fila flexible: cada control con ancho acotado; ninguno ocupa todo el contenedor. */
+.tcgx-catalogo-publico-filtro__barra {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.4rem 0.55rem;
+	width: 100%
+}
+
+.tcgx-catalogo-publico-filtro__campo {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	flex: 0 0 auto;
+	max-width: 100%
+}
+
+.tcgx-catalogo-publico-filtro__lbl {
+	font-size: 0.65rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+	color: rgba(2, 14, 40, 0.55);
+	white-space: nowrap;
+	margin: 0;
+	flex: 0 0 auto
+}
+
+.tcgx-catalogo-publico-filtro__campo--buscar .form-control {
+	flex: 0 0 auto;
+	width: 14rem;
+	min-width: 8rem;
+	max-width: 100%;
+	font-size: 0.82rem
+}
+
+.tcgx-catalogo-publico-filtro .form-select {
+	font-size: 0.78rem;
+	width: auto;
+	min-width: 5.5rem;
+	max-width: 9rem
+}
+
+.tcgx-catalogo-publico-filtro__acciones {
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.45rem;
+	flex: 0 0 auto;
+	margin-left: auto;
+	white-space: nowrap
+}
+
+.tcgx-catalogo-publico-filtro__contador {
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: rgba(2, 14, 40, 0.6)
+}
+
+@media (max-width: 767.98px) {
+	body.tcgx-pagina-buscar-cartas .navbar .navbar-nav > li a.nav-link {
+		padding: 10px 0
+	}
+
+	.tcgx-catalogo-publico-filtro__acciones {
+		margin-left: 0;
+		width: 100%;
+		justify-content: flex-end
+	}
+}
+
+.tcgx-catalogo-publico-carta--oculta {
+	display: none !important
+}
+
+.tcgx-catalogo-publico-grid {
+	display: grid;
+	grid-template-columns: repeat(6, minmax(0, 1fr));
+	gap: 10px
+}
+
+@media (max-width: 1399.98px) {
+	.tcgx-catalogo-publico-grid {
+		grid-template-columns: repeat(4, minmax(0, 1fr))
+	}
+}
+
+@media (max-width: 991.98px) {
+	.tcgx-catalogo-publico-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr))
+	}
+}
+
+@media (max-width: 767.98px) {
+	.tcgx-catalogo-publico-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr))
+	}
+}
+
+.tcgx-catalogo-publico-carta {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	background: #fff;
+	border: 1px solid rgba(2, 14, 40, 0.08);
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(2, 14, 40, 0.06);
+	overflow: hidden;
+	transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease
+}
+
+.tcgx-catalogo-publico-carta:hover,
+.tcgx-catalogo-publico-carta:focus-within {
+	transform: translateY(-2px);
+	border-color: rgba(253, 85, 35, 0.35);
+	box-shadow: 0 8px 20px rgba(2, 14, 40, 0.12)
+}
+
+.tcgx-catalogo-publico-carta__click {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	text-align: left;
+	cursor: pointer;
+	color: inherit
+}
+
+.tcgx-catalogo-publico-carta__click:focus-visible {
+	outline: 2px solid rgba(253, 85, 35, 0.55);
+	outline-offset: -2px
+}
+
+.tcgx-catalogo-publico-carta__whatsapp {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	background: #25d366;
+	color: #fff;
+	font-size: 1.15rem;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+	transition: transform .15s ease, background-color .15s ease
+}
+
+.tcgx-catalogo-publico-carta__whatsapp:hover,
+.tcgx-catalogo-publico-carta__whatsapp:focus-visible {
+	color: #fff;
+	background: #1ebe57;
+	transform: scale(1.06);
+	outline: none
+}
+
+.tcgx-catalogo-publico-carta__img {
+	aspect-ratio: 3 / 4;
+	background: #f4f6f9;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-bottom: 1px solid rgba(2, 14, 40, 0.06)
+}
+
+.tcgx-catalogo-publico-carta__img img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	padding: 0.35rem
+}
+
+.tcgx-catalogo-publico-carta__placeholder {
+	font-size: 2rem;
+	color: rgba(2, 14, 40, 0.2)
+}
+
+.tcgx-catalogo-publico-carta__body {
+	padding: 0.5rem 0.55rem 0.6rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+	flex: 1
+}
+
+.tcgx-catalogo-publico-carta__tcg {
+	font-size: 0.65rem;
+	font-weight: 600;
+	color: rgba(2, 14, 40, 0.55);
+	line-height: 1.2;
+	text-transform: uppercase
+}
+
+.tcgx-catalogo-publico-carta__nombre {
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #020e28;
+	line-height: 1.25
+}
+
+.tcgx-catalogo-publico-carta__expansion {
+	font-size: 0.68rem;
+	font-weight: 600;
+	color: rgba(2, 14, 40, 0.72);
+	line-height: 1.25
+}
+
+.tcgx-catalogo-publico-carta__precio {
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #0d6efd;
+	margin-top: 0.1rem
+}
+
+/* Pagina carta-detalle.php: detalle completo, galeria y contacto WhatsApp. */
+body.tcgx-pagina-carta-detalle .header.header-default,
+body.tcgx-pagina-carta-detalle .header .header-wrapper,
+body.tcgx-pagina-carta-detalle .header-nav-wrapper.header-sticky,
+body.tcgx-pagina-carta-detalle header .header-nav-wrapper.header-sticky.scroll-on {
+	position: relative;
+	background: var(--dark);
+	box-shadow: none
+}
+
+body.tcgx-pagina-carta-detalle header .header-nav-wrapper.header-sticky.scroll-on {
+	box-shadow: 0 2px 14px rgba(0, 0, 0, .28)
+}
+
+body.tcgx-pagina-carta-detalle .header .header-wrapper {
+	top: auto;
+	left: auto
+}
+
+body.tcgx-pagina-carta-detalle .navbar {
+	padding: 0
+}
+
+body.tcgx-pagina-carta-detalle .header.header-default .navbar .container {
+	padding: 6px 24px 8px;
+	background: transparent;
+	background-image: none;
+	background-color: transparent;
+	border-radius: 0;
+	max-width: 100%
+}
+
+body.tcgx-pagina-carta-detalle .header .navbar-brand img {
+	max-height: 52px;
+	width: auto
+}
+
+body.tcgx-pagina-carta-detalle .navbar .navbar-nav > li a.nav-link,
+body.tcgx-pagina-carta-detalle header .header-nav-wrapper.header-sticky.scroll-on .navbar .navbar-nav > li a.nav-link {
+	padding: 8px 12px;
+	color: var(--white)
+}
+
+body.tcgx-pagina-carta-detalle .navbar .navbar-nav > li a.nav-link i {
+	color: inherit
+}
+
+body.tcgx-pagina-carta-detalle .navbar .navbar-nav > li a.nav-link:hover,
+body.tcgx-pagina-carta-detalle .navbar .navbar-nav > li a.nav-link:focus {
+	color: var(--primary)
+}
+
+body.tcgx-pagina-carta-detalle .navbar button.navbar-toggler.offcanvas-nav-btn {
+	color: var(--white)
+}
+
+body.tcgx-pagina-carta-detalle .sticky-height {
+	display: none
+}
+
+body.tcgx-pagina-carta-detalle section.tcgx-carta-detalle-sec {
+	padding-top: 0.5rem
+}
+
+.tcgx-carta-detalle-acciones {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem
+}
+
+.tcgx-carta-detalle-acciones .btn {
+	padding: 8px 15px;
+	font-size: 14px;
+	border-radius: 8px;
+	font-weight: 700;
+	text-transform: uppercase;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	width: auto;
+	max-width: 100%
+}
+
+.tcgx-carta-detalle-volver__btn:hover,
+.tcgx-carta-detalle-volver__btn:focus {
+	color: var(--white)
+}
+
+.tcgx-carta-detalle-galeria__principal {
+	aspect-ratio: 3 / 4;
+	background: #f4f6f9;
+	border-radius: 12px;
+	border: 1px solid rgba(2, 14, 40, 0.08);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden
+}
+
+.tcgx-carta-detalle-galeria__principal img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	padding: 0.75rem
+}
+
+.tcgx-carta-detalle-galeria__principal--vacia {
+	font-size: 3rem;
+	color: rgba(2, 14, 40, 0.18)
+}
+
+.tcgx-carta-detalle-galeria__miniaturas {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+	margin-top: 0.55rem
+}
+
+.tcgx-carta-detalle-galeria__mini {
+	width: 3.25rem;
+	height: 4.25rem;
+	padding: 0;
+	border: 2px solid transparent;
+	border-radius: 8px;
+	background: #f4f6f9;
+	overflow: hidden;
+	cursor: pointer
+}
+
+.tcgx-carta-detalle-galeria__mini.is-active {
+	border-color: var(--primary)
+}
+
+.tcgx-carta-detalle-galeria__mini img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain
+}
+
+.tcgx-carta-detalle-datos {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0.45rem;
+	margin: 0
+}
+
+.tcgx-carta-detalle-datos__fila {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 0.35rem
+}
+
+.tcgx-carta-detalle-datos__fila dt {
+	margin: 0;
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: rgba(2, 14, 40, 0.52);
+	letter-spacing: 0.04em;
+	white-space: nowrap;
+	flex: 0 0 auto
+}
+
+.tcgx-carta-detalle-datos__fila dt::after {
+	content: ':';
+	margin-left: 0.1rem
+}
+
+.tcgx-carta-detalle-datos__fila dd {
+	margin: 0;
+	font-size: 0.88rem;
+	font-weight: 700;
+	color: var(--dark);
+	text-transform: uppercase;
+	flex: 1 1 auto;
+	min-width: 0
+}
+
+.tcgx-carta-detalle-datos__fila dd.tcgx-carta-detalle-datos__precio {
+	font-size: 1.55rem;
+	font-weight: 800;
+	color: #dc3545;
+	line-height: 1.15;
+	letter-spacing: 0.01em
+}
+
+.tcgx-carta-detalle-whatsapp i,
+.tcgx-carta-detalle-acciones .btn i {
+	font-size: 1rem
+}
+
+@media (max-width: 767.98px) {
+	.tcgx-carta-detalle-datos__fila dd {
+		font-size: 0.82rem
+	}
+
+	.tcgx-carta-detalle-datos__fila dd.tcgx-carta-detalle-datos__precio {
+		font-size: 1.35rem
+	}
+}
+/* ===== SECCION CATALOGO PUBLICO BUSCAR CARTAS: FIN ===== */
+
+/* ===== SECCION CALIFICACION PUBLICA USUARIOS: INICIO =====
+ * Pagina calificacion_usuarios.php: cabecera oscura, buscador por nombre y tabla alfabetica.
+ */
+
+body.tcgx-pagina-calificacion-usuarios .header.header-default,
+body.tcgx-pagina-calificacion-usuarios .header .header-wrapper,
+body.tcgx-pagina-calificacion-usuarios .header-nav-wrapper.header-sticky,
+body.tcgx-pagina-calificacion-usuarios header .header-nav-wrapper.header-sticky.scroll-on {
+	position: relative;
+	background: var(--dark);
+	box-shadow: none
+}
+
+body.tcgx-pagina-calificacion-usuarios header .header-nav-wrapper.header-sticky.scroll-on {
+	box-shadow: 0 2px 14px rgba(0, 0, 0, .28)
+}
+
+body.tcgx-pagina-calificacion-usuarios .header .header-wrapper {
+	top: auto;
+	left: auto
+}
+
+body.tcgx-pagina-calificacion-usuarios .navbar {
+	padding: 0
+}
+
+body.tcgx-pagina-calificacion-usuarios .header.header-default .navbar .container {
+	padding: 6px 24px 8px;
+	background: transparent;
+	background-image: none;
+	background-color: transparent;
+	border-radius: 0;
+	max-width: 100%
+}
+
+body.tcgx-pagina-calificacion-usuarios .header .navbar-brand img {
+	max-height: 52px;
+	width: auto
+}
+
+body.tcgx-pagina-calificacion-usuarios .navbar .navbar-nav > li a.nav-link,
+body.tcgx-pagina-calificacion-usuarios header .header-nav-wrapper.header-sticky.scroll-on .navbar .navbar-nav > li a.nav-link {
+	padding: 8px 12px;
+	color: var(--white)
+}
+
+body.tcgx-pagina-calificacion-usuarios .navbar .navbar-nav > li a.nav-link i {
+	color: inherit
+}
+
+body.tcgx-pagina-calificacion-usuarios .navbar .navbar-nav > li a.nav-link:hover,
+body.tcgx-pagina-calificacion-usuarios .navbar .navbar-nav > li a.nav-link:focus {
+	color: var(--primary)
+}
+
+body.tcgx-pagina-calificacion-usuarios .navbar button.navbar-toggler.offcanvas-nav-btn {
+	color: var(--white)
+}
+
+body.tcgx-pagina-calificacion-usuarios .sticky-height {
+	display: none
+}
+
+body.tcgx-pagina-calificacion-usuarios section.tcgx-calificacion-usuarios-sec {
+	padding-top: 1.25rem
+}
+
+.tcgx-calificacion-usuarios-filtro {
+	padding: 0.85rem 0.15rem 0.65rem;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid rgba(2, 14, 40, 0.1);
+	border-radius: 0
+}
+
+/* Fila flexible: cada control con ancho acotado; ninguno ocupa todo el contenedor. */
+.tcgx-calificacion-usuarios-filtro__barra {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.45rem 0.65rem;
+	width: 100%
+}
+
+.tcgx-calificacion-usuarios-filtro__campo {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	flex: 0 0 auto;
+	max-width: 100%
+}
+
+.tcgx-calificacion-usuarios-filtro__lbl {
+	font-size: 0.65rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+	color: rgba(2, 14, 40, 0.55);
+	white-space: nowrap;
+	margin: 0;
+	flex: 0 0 auto
+}
+
+.tcgx-calificacion-usuarios-filtro__campo--buscar .form-control {
+	flex: 0 0 auto;
+	width: 14rem;
+	min-width: 8rem;
+	max-width: 100%;
+	font-size: 0.82rem
+}
+
+.tcgx-calificacion-usuarios-filtro .form-select {
+	flex: 0 0 auto;
+	width: auto;
+	min-width: 5.5rem;
+	max-width: 9rem;
+	font-size: 0.82rem
+}
+
+.tcgx-calificacion-usuarios-filtro__acciones {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	flex: 0 0 auto;
+	margin-left: auto
+}
+
+.tcgx-calificacion-usuarios-filtro__contador {
+	font-size: 0.72rem;
+	font-weight: 600;
+	color: rgba(2, 14, 40, 0.62);
+	white-space: nowrap
+}
+
+@media (max-width: 767.98px) {
+	.tcgx-calificacion-usuarios-filtro__acciones {
+		margin-left: 0;
+		width: 100%;
+		justify-content: flex-end
+	}
+}
+
+.tcgx-calificacion-usuarios-tabla thead th {
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	color: rgba(2, 14, 40, 0.62);
+	white-space: nowrap
+}
+
+.tcgx-calificacion-usuarios-tabla tbody td {
+	font-size: 0.84rem;
+	text-transform: uppercase;
+	color: var(--dark)
+}
+
+.tcgx-calificacion-usuarios-fila--oculta {
+	display: none
+}
+/* ===== SECCION CALIFICACION PUBLICA USUARIOS: FIN ===== */
+
+/* ===== SECCION RASTREO PUBLICO ENVIO INDIVIDUAL: INICIO =====
+ * Pagina rastreo-envio.php: resultado de consulta por codigo CRE (sin consolidado).
+ */
+
+body.tcgx-pagina-rastreo-envio section.tcgx-rastreo-envio-sec {
+	padding-top: 1.25rem
+}
+
+.tcgx-rastreo-envio-alerta {
+	font-size: 0.9rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	padding: 0.65rem 0.85rem;
+	border-radius: 8px
+}
+
+.tcgx-rastreo-envio-alerta--error {
+	color: #842029;
+	background: rgba(220, 53, 69, 0.12);
+	border: 1px solid rgba(220, 53, 69, 0.25)
+}
+
+.tcgx-rastreo-envio-subtitulo {
+	font-size: 0.82rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: rgba(2, 14, 40, 0.72);
+	margin-bottom: 0.65rem
+}
+
+.tcgx-rastreo-envio-estado {
+	font-weight: 700;
+	text-transform: uppercase
+}
+
+.tcgx-rastreo-envio-estado--entregado {
+	color: #198754
+}
+
+.tcgx-rastreo-envio-estado--cancelado {
+	color: #495057
+}
+
+.tcgx-rastreo-envio-estado--devolucion {
+	color: #cc8800
+}
+
+.tcgx-rastreo-envio-estado--activo {
+	color: var(--primary)
+}
+
+.tcgx-rastreo-envio-tabla thead th {
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	color: rgba(2, 14, 40, 0.62);
+	white-space: nowrap
+}
+
+.tcgx-rastreo-envio-tabla tbody td {
+	font-size: 0.84rem;
+	text-transform: uppercase;
+	color: var(--dark)
+}
+
+.tcgx-rastreo-envio-acciones {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.5rem;
+	margin-top: 0.5rem;
+	width: 100%
+}
+
+.tcgx-rastreo-envio-acciones .btn {
+	padding: 8px 15px;
+	font-size: 14px;
+	border-radius: 8px;
+	font-weight: 700;
+	text-transform: uppercase;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	width: auto;
+	max-width: 100%
+}
+/* ===== SECCION RASTREO PUBLICO ENVIO INDIVIDUAL: FIN ===== */
