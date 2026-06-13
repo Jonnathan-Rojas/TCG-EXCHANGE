@@ -1,0 +1,185 @@
+/**
+ * Formulario de tienda (alta y edicion) del modulo admin.
+ * Responsabilidades: selects encadenados provincia/canton/distrito desde catalogo estatico,
+ * validacion en cliente y despliegue de errores de servidor.
+ * Depende de SweetAlert2 cargado antes en la pagina.
+ */
+(function () {
+	'use strict';
+
+	/* === BLOQUE LECTURA DE CATALOGO GEOGRAFICO: INICIO ===
+	 * Catalogo embebido por PHP como JSON: { PROVINCIA: { CANTON: [DISTRITO, ...] } }.
+	 */
+	var catalogo = {};
+	var nodoCatalogo = document.getElementById('tcgx-catalogo-geo');
+	if (nodoCatalogo) {
+		try {
+			catalogo = JSON.parse(nodoCatalogo.textContent || '{}');
+		} catch (e) {
+			catalogo = {};
+		}
+	}
+	/* === BLOQUE LECTURA DE CATALOGO GEOGRAFICO: FIN === */
+
+
+	/* === BLOQUE SELECTS ENCADENADOS PROVINCIA/CANTON/DISTRITO: INICIO ===
+	 * Poblado dependiente y preseleccion a partir de data-tcgx-selected (valores ya en MAYUSCULAS).
+	 */
+	var selProvincia = document.getElementById('tienda-provincia');
+	var selCanton = document.getElementById('tienda-canton');
+	var selDistrito = document.getElementById('tienda-distrito');
+
+	function limpiarSelect(select) {
+		if (!select) {
+			return;
+		}
+		select.innerHTML = '<option value="">SELECCIONE…</option>';
+	}
+
+	function agregarOpciones(select, valores) {
+		if (!select) {
+			return;
+		}
+		valores.forEach(function (valor) {
+			var opcion = document.createElement('option');
+			opcion.value = valor;
+			opcion.textContent = valor;
+			select.appendChild(opcion);
+		});
+	}
+
+	function poblarProvincias() {
+		if (!selProvincia) {
+			return;
+		}
+		agregarOpciones(selProvincia, Object.keys(catalogo));
+	}
+
+	function poblarCantones(provincia) {
+		limpiarSelect(selCanton);
+		limpiarSelect(selDistrito);
+		if (provincia && catalogo[provincia]) {
+			agregarOpciones(selCanton, Object.keys(catalogo[provincia]));
+		}
+	}
+
+	function poblarDistritos(provincia, canton) {
+		limpiarSelect(selDistrito);
+		if (provincia && canton && catalogo[provincia] && catalogo[provincia][canton]) {
+			agregarOpciones(selDistrito, catalogo[provincia][canton]);
+		}
+	}
+
+	if (selProvincia && selCanton && selDistrito) {
+		poblarProvincias();
+
+		// Preseleccion (modo edicion o reintento por error de validacion).
+		var provSel = selProvincia.getAttribute('data-tcgx-selected') || '';
+		var cantSel = selCanton.getAttribute('data-tcgx-selected') || '';
+		var distSel = selDistrito.getAttribute('data-tcgx-selected') || '';
+		if (provSel && catalogo[provSel]) {
+			selProvincia.value = provSel;
+			poblarCantones(provSel);
+			if (cantSel && catalogo[provSel][cantSel]) {
+				selCanton.value = cantSel;
+				poblarDistritos(provSel, cantSel);
+				if (distSel) {
+					selDistrito.value = distSel;
+				}
+			}
+		}
+
+		selProvincia.addEventListener('change', function () {
+			poblarCantones(selProvincia.value);
+		});
+		selCanton.addEventListener('change', function () {
+			poblarDistritos(selProvincia.value, selCanton.value);
+		});
+	}
+	/* === BLOQUE SELECTS ENCADENADOS PROVINCIA/CANTON/DISTRITO: FIN === */
+
+
+	/* === BLOQUE VALIDACION EN CLIENTE: INICIO ===
+	 * Comprobaciones previas al envio (complemento de la validacion definitiva en servidor).
+	 */
+	var formulario = document.getElementById('tcgx-tienda-form');
+
+	function valor(id) {
+		var el = document.getElementById(id);
+		return el ? el.value.trim() : '';
+	}
+
+	function validarFormulario() {
+		var errores = [];
+		if (valor('tienda-nombre') === '') {
+			errores.push('El nombre es obligatorio.');
+		}
+		var correo = valor('tienda-correo');
+		if (correo === '') {
+			errores.push('El correo es obligatorio.');
+		} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+			errores.push('El formato del correo no es válido.');
+		}
+		if (valor('tienda-telefono') === '') {
+			errores.push('El teléfono es obligatorio.');
+		}
+		// Geografia obligatoria y coherente.
+		if (valor('tienda-provincia') === '') {
+			errores.push('Debe seleccionar una provincia.');
+		} else if (valor('tienda-canton') === '') {
+			errores.push('Debe seleccionar un cantón.');
+		} else if (valor('tienda-distrito') === '') {
+			errores.push('Debe seleccionar un distrito.');
+		}
+		if (valor('tienda-direccion') === '') {
+			errores.push('La dirección es obligatoria.');
+		}
+		return errores;
+	}
+
+	if (formulario) {
+		formulario.addEventListener('submit', function (evento) {
+			var errores = validarFormulario();
+			if (errores.length > 0) {
+				evento.preventDefault();
+				if (typeof window.Swal !== 'undefined') {
+					Swal.fire({
+						icon: 'error',
+						title: 'Revise los datos',
+						html: '<ul class="text-start mb-0">' + errores.map(function (e) { return '<li>' + e + '</li>'; }).join('') + '</ul>',
+						confirmButtonText: 'ACEPTAR'
+					});
+				}
+			}
+		});
+	}
+	/* === BLOQUE VALIDACION EN CLIENTE: FIN === */
+
+
+	/* === BLOQUE ERRORES DE SERVIDOR (REINTENTO): INICIO ===
+	 * Muestra los errores devueltos por la validacion de servidor tras un envio fallido.
+	 */
+	function mostrarErroresServidor() {
+		var nodo = document.getElementById('tcgx-form-flash');
+		if (!nodo || typeof window.Swal === 'undefined') {
+			return;
+		}
+		var datos;
+		try {
+			datos = JSON.parse(nodo.textContent || '{}');
+		} catch (e) {
+			return;
+		}
+		if (datos.errores && datos.errores.length > 0) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Revise los datos',
+				html: '<ul class="text-start mb-0">' + datos.errores.map(function (e) { return '<li>' + e + '</li>'; }).join('') + '</ul>',
+				confirmButtonText: 'ACEPTAR'
+			});
+		}
+	}
+	mostrarErroresServidor();
+	/* === BLOQUE ERRORES DE SERVIDOR (REINTENTO): FIN === */
+
+})();
