@@ -1,0 +1,689 @@
+/* ===== SECCION TOKENS PANEL ADMIN: INICIO =====
+ * Alineacion con tcgexchange.css: mismos tokens base para tipografia y color primario en modulo aislado.
+ */
+:root {
+	--font-family-base: "DM Sans", sans-serif;
+	--font-family-headings: "Rethink Sans", sans-serif;
+	--primary: #fd5523;
+	--headings-color: #020e28;
+	--tcgx-store-sidebar-bg: #0a1224;
+	--tcgx-store-sidebar-border: rgba(255, 255, 255, 0.08);
+	--tcgx-store-sidebar-text: rgba(255, 255, 255, 0.88);
+	--tcgx-store-sidebar-muted: rgba(255, 255, 255, 0.55);
+	--tcgx-store-main-bg: #f4f6fb;
+	--tcgx-store-topbar-bg: linear-gradient(180deg, #050a18 0%, #0a1224 50%, #0d1830 100%);
+	--tcgx-store-card-shadow: 0 8px 28px rgba(2, 14, 40, 0.08);
+	--tcgx-store-sidebar-width: 272px;
+	--tcgx-store-sidebar-width-collapsed: 76px;
+	/* Reserva vertical para el pie fijo (altura aproximada + margen); evita que el ultimo contenido quede tapado. */
+	--tcgx-store-footer-slot: 3.5rem;
+}
+/* ===== SECCION TOKENS PANEL ADMIN: FIN ===== */
+
+/* ===== SECCION LAYOUT APP: INICIO =====
+ * Shell flex de alto minimo viewport: barra lateral fija en escritorio y columna principal con scroll.
+ */
+.tcgx-store-app {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--tcgx-store-main-bg);
+}
+
+.tcgx-store-app__body {
+	flex: 1 1 auto;
+	display: flex;
+	min-height: 0;
+	/* Misma altura minima que viewport para que la columna principal pueda anclar el pie al borde inferior. */
+	min-height: 100vh;
+}
+
+/* Sidebar escritorio: columna fija; en movil el menu equivalente vive en offcanvas (Bootstrap). */
+.tcgx-store-sidebar {
+	flex: 0 0 var(--tcgx-store-sidebar-width);
+	max-width: var(--tcgx-store-sidebar-width);
+	background: linear-gradient(180deg, #050a18 0%, var(--tcgx-store-sidebar-bg) 40%, #0d1830 100%);
+	color: var(--tcgx-store-sidebar-text);
+	border-right: 1px solid var(--tcgx-store-sidebar-border);
+	display: flex;
+	flex-direction: column;
+	position: sticky;
+	top: 0;
+	align-self: flex-start;
+	height: 100vh;
+	z-index: 1020;
+	transition: flex-basis 0.22s ease, max-width 0.22s ease;
+}
+
+.tcgx-store-sidebar__brand {
+	padding: 1.25rem 1.25rem 1rem;
+	border-bottom: 1px solid var(--tcgx-store-sidebar-border);
+}
+
+.tcgx-store-sidebar__logo-link {
+	display: block;
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.92);
+}
+
+/* Si el SVG no carga, evita estilo de enlace por defecto (texto azul) sobre fondo oscuro. */
+.tcgx-store-sidebar__logo-link:hover,
+.tcgx-store-sidebar__logo-link:focus-visible {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.tcgx-store-sidebar__logo-full {
+	max-width: 168px;
+	height: auto;
+	display: block;
+}
+
+/* Marca compacta solo visible con sidebar colapsado (sustituye al logo ancho). */
+.tcgx-store-sidebar__logo-mark {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	margin: 0 auto;
+	border-radius: 12px;
+	background: rgba(253, 85, 35, 0.2);
+	color: var(--primary);
+	font-size: 1.25rem;
+}
+
+.tcgx-store-sidebar__label {
+	font-family: "Rethink Sans", sans-serif;
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--tcgx-store-sidebar-muted);
+	padding: 1rem 1.25rem 0.35rem;
+}
+
+.tcgx-store-sidebar__nav {
+	flex: 1 1 auto;
+	overflow-y: auto;
+	padding: 0.25rem 0.75rem 1rem;
+}
+
+.tcgx-store-sidebar__nav .nav-link {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+	color: var(--tcgx-store-sidebar-text);
+	font-family: "Rethink Sans", sans-serif;
+	font-weight: 500;
+	font-size: 0.9375rem;
+	padding: 0.65rem 0.85rem;
+	border-radius: 10px;
+	border: 1px solid transparent;
+	transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.tcgx-store-sidebar__nav .nav-link i {
+	width: 1.25rem;
+	flex-shrink: 0;
+	text-align: center;
+	opacity: 0.9;
+}
+
+.tcgx-store-sidebar__text {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.tcgx-store-sidebar__nav .nav-link:hover {
+	background-color: rgba(253, 85, 35, 0.12);
+	color: #fff;
+	border-color: rgba(253, 85, 35, 0.25);
+}
+
+.tcgx-store-sidebar__nav .nav-link.active {
+	background-color: rgba(253, 85, 35, 0.22);
+	color: #fff;
+	border-color: rgba(253, 85, 35, 0.45);
+}
+
+/* Area principal: columna flex; el pie es position fixed y no participa en el flujo (ver bloque footer). */
+.tcgx-store-main {
+	flex: 1 1 auto;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	min-height: 100dvh;
+}
+
+.tcgx-store-topbar {
+	position: sticky;
+	top: 0;
+	z-index: 1010;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	flex-wrap: wrap;
+	padding: 0.85rem 1.25rem;
+	background: var(--tcgx-store-topbar-bg);
+	border-bottom: 1px solid var(--tcgx-store-sidebar-border);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.tcgx-store-topbar__title {
+	font-family: "Rethink Sans", sans-serif;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: #ffffff;
+	margin: 0;
+	line-height: 1.2;
+}
+
+.tcgx-store-topbar__meta {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+
+.tcgx-store-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.35rem 0.75rem;
+	border-radius: 999px;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	background: rgba(255, 255, 255, 0.1);
+	color: rgba(255, 255, 255, 0.95);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.tcgx-store-chip i {
+	color: var(--primary);
+}
+
+.tcgx-store-topbar__logout {
+	white-space: nowrap;
+}
+
+.tcgx-store-content {
+	flex: 1 1 auto;
+	padding: 1.25rem 1.25rem calc(1.25rem + var(--tcgx-store-footer-slot));
+	min-height: 0;
+}
+
+/* Contenido central sin tarjetas ni tablas: solo area gris (#f4f6fb heredada), sin cajas blancas. */
+.tcgx-store-content--vacio {
+	padding: 0;
+	padding-bottom: var(--tcgx-store-footer-slot);
+}
+
+/* Caja principal en blanco para paginas con cuerpo aun sin contenido (listados, formularios, etc.). */
+.tcgx-store-contenedor-blanco {
+	min-height: 280px;
+	background: #fff;
+	border-radius: 14px;
+	border: 1px solid rgba(13, 24, 48, 0.08);
+	box-shadow: 0 8px 32px rgba(13, 24, 48, 0.06);
+}
+
+/* Pie del modulo: fijo al borde inferior del viewport; no se desplaza con el scroll; en xl+ el ancho respeta el sidebar. */
+.tcgx-store-footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1040;
+	padding: 0.75rem 1.25rem;
+	background: linear-gradient(180deg, #0d1830 0%, #050a18 100%);
+	border-top: 1px solid var(--tcgx-store-sidebar-border);
+	color: var(--tcgx-store-sidebar-muted);
+	font-size: 0.8125rem;
+	box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.2);
+	transition: left 0.22s ease;
+}
+
+@media (min-width: 1200px) {
+	.tcgx-store-footer {
+		left: var(--tcgx-store-sidebar-width);
+	}
+
+	.tcgx-store-app--sidebar-collapsed .tcgx-store-footer {
+		left: var(--tcgx-store-sidebar-width-collapsed);
+	}
+}
+
+.tcgx-store-footer__inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.35rem 0.65rem;
+	text-align: center;
+}
+
+.tcgx-store-footer__copy {
+	color: rgba(255, 255, 255, 0.78);
+	font-weight: 600;
+}
+
+.tcgx-store-footer__sep {
+	color: rgba(255, 255, 255, 0.35);
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.tcgx-store-footer__credit {
+	color: rgba(255, 255, 255, 0.55);
+}
+
+@media (min-width: 1200px) {
+	.tcgx-store-content {
+		padding: 1.5rem 1.75rem calc(1.75rem + var(--tcgx-store-footer-slot));
+	}
+
+	.tcgx-store-content--vacio {
+		padding: 0;
+		padding-bottom: var(--tcgx-store-footer-slot);
+	}
+}
+/* ===== SECCION LAYOUT APP: FIN ===== */
+
+/* ===== SECCION SECCIONES Y TARJETAS KPI: INICIO =====
+ * Bloques de anclaje para navegacion lateral y tarjetas metricas de cabecera de panel.
+ */
+.tcgx-store-section-anchor {
+	scroll-margin-top: 96px;
+}
+
+.tcgx-store-section-title {
+	font-family: "Rethink Sans", sans-serif;
+	font-size: 1.05rem;
+	font-weight: 700;
+	color: var(--headings-color);
+	margin: 0 0 1rem;
+}
+
+.tcgx-store-kpi .card {
+	border: 1px solid rgba(2, 14, 40, 0.08);
+	border-radius: 14px;
+	box-shadow: var(--tcgx-store-card-shadow);
+	overflow: hidden;
+}
+
+.tcgx-store-kpi .card-body {
+	padding: 1.1rem 1.15rem;
+}
+
+.tcgx-store-kpi__label {
+	font-size: 0.78rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: rgba(2, 14, 40, 0.55);
+	margin-bottom: 0.35rem;
+}
+
+.tcgx-store-kpi__value {
+	font-family: "Rethink Sans", sans-serif;
+	font-size: 1.65rem;
+	font-weight: 800;
+	color: var(--headings-color);
+	line-height: 1.1;
+}
+
+.tcgx-store-kpi__icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.15rem;
+	color: #fff;
+}
+
+.tcgx-store-kpi__icon--primary {
+	background: linear-gradient(135deg, var(--primary) 0%, #e84e1f 100%);
+}
+
+.tcgx-store-kpi__icon--dark {
+	background: linear-gradient(135deg, #1a2744 0%, #0a1224 100%);
+}
+
+.tcgx-store-kpi__icon--muted {
+	background: linear-gradient(135deg, #5a6578 0%, #3d4658 100%);
+}
+/* ===== SECCION SECCIONES Y TARJETAS KPI: FIN ===== */
+
+/* ===== SECCION TABLAS DATATABLES ADMIN: INICIO =====
+ * Contenedor de tabla con fondo tarjeta; acciones por icono segun paleta Bootstrap (diseño.md).
+ */
+.tcgx-store-table-card {
+	background: #fff;
+	border: 1px solid rgba(2, 14, 40, 0.08);
+	border-radius: 14px;
+	box-shadow: var(--tcgx-store-card-shadow);
+	padding: 1rem 1rem 0.25rem;
+}
+
+.tcgx-store-table-card .table {
+	margin-bottom: 0;
+}
+
+/* Ancho completo recomendado por DataTables sin atributo style en marca PHP (diseño.md). */
+table.tcgx-store-dt-table {
+	width: 100% !important;
+	border-collapse: separate;
+	border-spacing: 0;
+	overflow: hidden;
+}
+
+/* Cabecera con color solido (azul oscuro del panel) y texto blanco; antes carecia de diseño. */
+/* INICIO BLOQUE: PRIORIDAD DE CABECERA SOBRE DATATABLES */
+/* DataTables inyecta "table.table.dataTable>:not(caption)>*>*{background-color:var(--bs-table-bg)}"
+   (fondo blanco) con mayor especificidad al inicializar; eso dejaba la cabecera blanca con texto
+   blanco (invisible). Se fuerza el fondo oscuro y el texto blanco con !important para ganar siempre. */
+table.tcgx-store-dt-table thead th {
+	background-color: var(--tcgx-store-sidebar-bg) !important;
+	color: #fff !important;
+	border-bottom: none;
+	font-family: "Rethink Sans", sans-serif;
+	font-weight: 700;
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+/* FIN BLOQUE: PRIORIDAD DE CABECERA SOBRE DATATABLES */
+
+/* Redondeo de esquinas de la cabecera para integrarse con la tarjeta contenedora. */
+table.tcgx-store-dt-table thead th:first-child {
+	border-top-left-radius: 10px;
+}
+
+table.tcgx-store-dt-table thead th:last-child {
+	border-top-right-radius: 10px;
+}
+
+/* Iconos de ordenamiento de DataTables visibles sobre la cabecera oscura. */
+table.tcgx-store-dt-table thead th.dt-orderable-asc span.dt-column-order::before,
+table.tcgx-store-dt-table thead th.dt-orderable-desc span.dt-column-order::after,
+table.tcgx-store-dt-table thead th.dt-ordering-asc span.dt-column-order::before,
+table.tcgx-store-dt-table thead th.dt-ordering-desc span.dt-column-order::after {
+	color: #fff;
+	opacity: 0.85;
+}
+
+/* Filas con cebra y realce al pasar el puntero para mejorar lectura. */
+table.tcgx-store-dt-table tbody tr:nth-child(even) > td {
+	background-color: #f8fafc;
+}
+
+table.tcgx-store-dt-table tbody tr:hover > td {
+	background-color: rgba(253, 85, 35, 0.08);
+}
+
+table.tcgx-store-dt-table tbody td {
+	vertical-align: middle;
+	border-bottom: 1px solid rgba(2, 14, 40, 0.06);
+}
+
+/* Bloque vacío de seccion: icono y guion hasta contenido funcional. */
+.tcgx-store-placeholder {
+	padding: 2.5rem 1.25rem;
+	text-align: center;
+}
+
+.tcgx-store-table-card .dataTables_wrapper .dataTables_filter input {
+	border-radius: 8px;
+	border: 1px solid rgba(2, 14, 40, 0.14);
+}
+
+.tcgx-store-table-card .dataTables_wrapper .dataTables_length select {
+	border-radius: 8px;
+}
+
+.tcgx-store-actions {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	flex-wrap: nowrap;
+}
+
+.tcgx-store-actions .btn {
+	padding: 0.35rem 0.5rem;
+	border-radius: 8px;
+	line-height: 1;
+}
+
+/* Botones solo icono: colores semánticos acorde a diseño.md (crear, editar, eliminar, ver). */
+.tcgx-store-actions .btn[data-tcgx-action="ver"] {
+	color: #fff;
+}
+
+.tcgx-store-actions .btn[data-tcgx-action="crear"] {
+	color: #fff;
+}
+
+.tcgx-store-actions .btn[data-tcgx-action="editar"] {
+	color: #212529;
+}
+
+.tcgx-store-actions .btn[data-tcgx-action="eliminar"] {
+	color: #fff;
+}
+
+@media (max-width: 767.98px) {
+	.tcgx-store-kpi__value {
+		font-size: 1.35rem;
+	}
+
+	.tcgx-store-topbar__title {
+		font-size: 1rem;
+	}
+}
+/* ===== SECCION TABLAS DATATABLES ADMIN: FIN ===== */
+
+/* ===== SECCION CRUD USUARIOS (ENCABEZADO, FORMULARIO, ESTADOS): INICIO =====
+ * Estilos propios del modulo admin para la gestion de usuarios; sin estilos embebidos en HTML/PHP (diseño.md).
+ */
+
+/* Encabezado de seccion: titulo a la izquierda y accion principal a la derecha, adaptable en movil. */
+.tcgx-store-section-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin-bottom: 1.1rem;
+}
+
+/* Barra de accion sobre la tabla: boton de alta alineado a la derecha en su propia fila. */
+.tcgx-store-tabla-toolbar {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 1rem;
+}
+
+/* Tarjeta contenedora de formularios de alta/edicion. */
+.tcgx-store-form-card {
+	background: #fff;
+	border: 1px solid rgba(2, 14, 40, 0.08);
+	border-radius: 14px;
+	box-shadow: var(--tcgx-store-card-shadow);
+	padding: 1.5rem;
+}
+
+/* Subtitulo de seccion dentro de un formulario (p. ej. bloque de cambio de contrasena en Mi perfil). */
+.tcgx-store-form-subtitle {
+	font-family: "Rethink Sans", sans-serif;
+	font-size: 0.95rem;
+	font-weight: 700;
+	color: var(--headings-color);
+	margin: 1.6rem 0 0.2rem;
+	padding-top: 1.1rem;
+	border-top: 1px solid rgba(2, 14, 40, 0.08);
+}
+
+/* Barra de acciones del formulario: alineada a la derecha, apilada en movil. */
+.tcgx-store-form-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.6rem;
+	margin-top: 1.5rem;
+	padding-top: 1.1rem;
+	border-top: 1px solid rgba(2, 14, 40, 0.08);
+}
+
+@media (max-width: 575.98px) {
+	.tcgx-store-form-actions {
+		flex-direction: column-reverse;
+	}
+
+	.tcgx-store-form-actions .btn {
+		width: 100%;
+	}
+}
+
+/* Etiqueta de estado del usuario en el listado (color semantico por valor controlado). */
+.tcgx-estado {
+	display: inline-block;
+	padding: 0.25rem 0.6rem;
+	border-radius: 999px;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+}
+
+.tcgx-estado--activo {
+	background: rgba(25, 135, 84, 0.15);
+	color: #146c43;
+}
+
+.tcgx-estado--bloqueado {
+	background: rgba(220, 53, 69, 0.15);
+	color: #b02a37;
+}
+
+.tcgx-estado--inactivo {
+	background: rgba(108, 117, 125, 0.18);
+	color: #495057;
+}
+
+/* Caja de clave generada mostrada una sola vez (SweetAlert2): valor monoespaciado + boton copiar. */
+.tcgx-clave-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.35rem;
+	margin-top: 0.5rem;
+}
+
+.tcgx-clave-box code {
+	font-size: 1.05rem;
+	font-weight: 700;
+	background: #f4f6fb;
+	border: 1px dashed rgba(2, 14, 40, 0.25);
+	border-radius: 8px;
+	padding: 0.35rem 0.7rem;
+	color: var(--headings-color);
+}
+/* ===== SECCION CRUD USUARIOS (ENCABEZADO, FORMULARIO, ESTADOS): FIN ===== */
+
+/* ===== SECCION OFFCANVAS MENU MOVIL: INICIO =====
+ * Replica visual del sidebar para el panel offcanvas en viewports estrechos.
+ */
+.tcgx-store-offcanvas.offcanvas {
+	background: linear-gradient(180deg, #050a18 0%, var(--tcgx-store-sidebar-bg) 45%, #0d1830 100%);
+	color: var(--tcgx-store-sidebar-text);
+}
+
+.tcgx-store-offcanvas .offcanvas-header {
+	border-bottom: 1px solid var(--tcgx-store-sidebar-border);
+}
+
+.tcgx-store-offcanvas .btn-close {
+	filter: invert(1);
+	opacity: 0.75;
+}
+
+.tcgx-store-offcanvas .tcgx-store-sidebar__nav {
+	padding-top: 0.5rem;
+}
+/* ===== SECCION OFFCANVAS MENU MOVIL: FIN ===== */
+
+/* ===== SECCION SIDEBAR COLAPSADO ESCRITORIO: INICIO =====
+ * Estado activado por clase en #tcgx-store-app-root; reduce ancho del aside y oculta textos manteniendo iconos centrados.
+ */
+@media (min-width: 1200px) {
+	.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar {
+		flex: 0 0 var(--tcgx-store-sidebar-width-collapsed);
+		max-width: var(--tcgx-store-sidebar-width-collapsed);
+	}
+
+	.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar__brand {
+		padding-left: 0.65rem;
+		padding-right: 0.65rem;
+	}
+
+	.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar__logo-full {
+		display: none;
+	}
+
+	.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar__logo-mark {
+		display: inline-flex;
+	}
+
+	.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar__label-text {
+		display: none;
+	}
+
+	.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar__label {
+		padding-top: 0.45rem;
+		padding-bottom: 0.2rem;
+	}
+
+	.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar__text {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar__nav .nav-link {
+		justify-content: center;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+
+	.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar__nav .nav-link i {
+		width: auto;
+	}
+}
+
+/* Icono del boton colapsar: flecha izquierda en menu expandido, derecha en colapsado (solo xl+). */
+.tcgx-store-sidebar-toggle__icon--closed {
+	display: none;
+}
+
+.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar-toggle__icon--open {
+	display: none;
+}
+
+.tcgx-store-app--sidebar-collapsed .tcgx-store-sidebar-toggle__icon--closed {
+	display: inline-block;
+}
+/* ===== SECCION SIDEBAR COLAPSADO ESCRITORIO: FIN ===== */

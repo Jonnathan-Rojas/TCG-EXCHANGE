@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="290" height="68" fill="none" viewBox="0 0 290 68" role="img" aria-labelledby="logo-footer-title">
+  <title id="logo-footer-title">TCG EXCHANGE - By TCG GAMES STORE</title>
+  <path fill="#fd5523" fill-rule="evenodd" d="M54.553 56 71 0 0 35.503l40.018-4.073z" clip-rule="evenodd"/>
+  <text x="78" y="31" fill="#ffffff" font-family="Segoe UI, system-ui, -apple-system, Arial, sans-serif" font-size="18" font-weight="800" letter-spacing=".03em">TCG EXCHANGE</text>
+  <text text-anchor="end" x="225" y="58" fill="rgba(255, 255, 255, .82)" font-family="Segoe UI, system-ui, -apple-system, Arial, sans-serif" font-size="10.5" font-weight="600" letter-spacing=".06em">By TCG GAMES STORE</text>
+  <path fill="none" stroke="#fd5523" stroke-width="2.2" stroke-linecap="round" d="M78 40Q150 44 225 40"/>
+</svg>
