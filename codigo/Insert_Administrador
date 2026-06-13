@@ -1,0 +1,27 @@
+INSERT INTO usuarios (
+    id,
+    nombre,
+    correo,
+    telefono,
+    clavehash,
+    perfil,
+    idtienda,
+    provincia,
+    canton,
+    distrito,
+    direccion,
+    estado
+) VALUES (
+    '711112222',
+    'ADMINISTRADOR',
+    'admin@sistema.com',
+    '88887777',
+    '$2y$10$kOsR2gkpY0mblcXNZWu8S.g9hF9bPfPh7.i6myabjl/h8sD8adhkC',
+    'ADMINISTRADOR',
+    NULL,
+    'LIMON',
+    'LIMON',
+    'LIMON',
+    'DIRECCION LIMON',
+    'ACTIVO'
+);
